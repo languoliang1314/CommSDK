@@ -1,8 +1,7 @@
-package com.lan.paysharedsk.pay;
+package com.lan.paysharedsk.ali;
 
 public interface IAlPayResultListener {
     void onPaySuccess();
-
     void onPaying();
 
     void onPayFail();

@@ -9,11 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.zxing.Result;
 import com.lan.commonsdk.ZxingScan.ZxingScanActivity;
 import com.lan.commonsdk.permission.PermissionCallBack;
 import com.lan.commonsdk.permission.PermissionHelp;
-import com.lan.commonsdk.permission.PermissionUtils;
+import com.lan.paysharedsk.Config;
 import com.lan.paysharedsk.pay.FastPay;
 import com.lan.paysharedsk.pay.IAlPayResultListener;
 
@@ -31,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Config.getInstance()
+                .withWeChatAppID("wxd930ea5d5a258f4f")
+                .registeWeChat(this);
         PermissionHelp.with(this)
                 .permissionCode(CAMERA_CODE)
                 .permissions(new String[]{Manifest.permission.CAMERA})
@@ -53,34 +55,36 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this, ZxingScanActivity.class);
                 //startActivityForResult(intent,101);
+//                FastPay.create(MainActivity.this)
+//                        .setPayResultListener(new IAlPayResultListener() {
+//                            @Override
+//                            public void onPaySuccess() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onPaying() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onPayFail() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onPayCancel() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onPayConnectError() {
+//
+//                            }
+//                        })
+//                        .alPay(info);
                 FastPay.create(MainActivity.this)
-                        .setPayResultListener(new IAlPayResultListener() {
-                            @Override
-                            public void onPaySuccess() {
-
-                            }
-
-                            @Override
-                            public void onPaying() {
-
-                            }
-
-                            @Override
-                            public void onPayFail() {
-
-                            }
-
-                            @Override
-                            public void onPayCancel() {
-
-                            }
-
-                            @Override
-                            public void onPayConnectError() {
-
-                            }
-                        })
-                        .alPay(info);
+                        .weChatPay("aa");
 
             }
         });

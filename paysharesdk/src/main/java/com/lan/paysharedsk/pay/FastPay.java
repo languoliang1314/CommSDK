@@ -1,13 +1,17 @@
 package com.lan.paysharedsk.pay;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
+
+import com.lan.paysharedsk.ali.IAlPayResultListener;
+import com.lan.paysharedsk.wechat.WeChatFactory;
 
 public class FastPay{
     private Activity mActivity;
     //设置支付回调监听
     private IAlPayResultListener mIAlPayResultListener = null;
+
+
 
     private FastPay(Activity activity) {
         this.mActivity = activity;
@@ -22,13 +26,13 @@ public class FastPay{
         return this;
     }
 
-    public FastPay alPay(String orderInfo) {
-        final AlPayAsyncTask payAsyncTask = new AlPayAsyncTask(mActivity, mIAlPayResultListener);
-        payAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, orderInfo);
-        return this;
+    public void aliPay(String orderInfo) {
     }
 
-    public FastPay weChatPay() {
-        return this;
+    public void weChatPay(String orderInfo){
+        WeChatFactory.getInstance().weChatPay(orderInfo);
+
     }
+
+
 }

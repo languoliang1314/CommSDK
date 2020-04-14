@@ -1,10 +1,10 @@
-package com.lan.paysharedsk.pay;
+package com.lan.paysharedsk.ali;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.alipay.sdk.app.PayTask;
+import com.lan.paysharedsk.ali.IAlPayResultListener;
 
 public class AlPayAsyncTask extends AsyncTask<String, Void, String> {
     private final Activity ACTIVITY;
