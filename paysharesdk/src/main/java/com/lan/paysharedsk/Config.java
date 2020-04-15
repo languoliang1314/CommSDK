@@ -11,7 +11,12 @@ public class Config {
     //微信APPID
     public static String APP_ID;
 
-    private static IWXAPI wxapi;
+    //微信Secret
+    public static String APP_SECRET;
+
+    //QQ  APPID
+    public static String QQ_APP_ID;
+
 
     private Activity mContext;
     /**
@@ -34,14 +39,14 @@ public class Config {
         return this;
     }
 
-    public Config registeWeChat(Context context){
-        wxapi = WXAPIFactory.createWXAPI(context, null);
-        wxapi.registerApp(Config.APP_ID);
+    public Config withWeChatAppSecret (String appSecret){
+        APP_SECRET=appSecret;
         return this;
     }
 
-    public  IWXAPI getWxApi(){
-        return wxapi;
+    public Config withQqApId (String appId){
+        QQ_APP_ID=appId;
+        return this;
     }
 
     public Activity getContext(){

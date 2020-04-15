@@ -1,4 +1,4 @@
-package com.lan.paysharedsk.ali;
+package com.lan.paysharedsk.callbacks;
 
 public interface IAlPayResultListener {
     void onPaySuccess();

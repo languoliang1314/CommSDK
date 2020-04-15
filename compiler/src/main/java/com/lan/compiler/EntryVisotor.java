@@ -24,11 +24,30 @@ public class EntryVisotor extends SimpleAnnotationValueVisitor7<Void, Void> {
     @Override
     public Void visitType(TypeMirror typeMirror, Void aVoid) {
         mTypeMirror = typeMirror;
+        generateWXSignInCode();
         generateWXPayCode();
         return aVoid;
     }
     public void setFiler(Filer filer){
         this.mFiler = filer;
+    }
+
+    /**
+     * 生成类
+     */
+    private void generateWXSignInCode() {
+        TypeSpec.Builder classTypeSpec = TypeSpec.classBuilder("WXEntryActivity")
+                .addModifiers(Modifier.PUBLIC,Modifier.FINAL)
+                .superclass(TypeName.get(mTypeMirror));
+        try {
+            JavaFile.builder(mPackageName+"wxapi",classTypeSpec.build())
+                    .addFileComment("微信登录自动生成")
+                    .build().writeTo(mFiler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**

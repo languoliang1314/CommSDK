@@ -1,9 +1,8 @@
 package com.lan.paysharedsk.pay;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 
-import com.lan.paysharedsk.ali.IAlPayResultListener;
+import com.lan.paysharedsk.callbacks.IAlPayResultListener;
 import com.lan.paysharedsk.wechat.WeChatFactory;
 
 public class FastPay{

@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.lan.paysharedsk.Config;
-import com.lan.paysharedsk.pay.FastPay;
+import com.lan.paysharedsk.callbacks.IWeChatSignInCallback;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -19,6 +20,7 @@ public class WeChatFactory {
     public static final String APP_ID = Config.APP_ID;
     private final IWXAPI WXAPI;
     private Context mContext;
+    private IWeChatSignInCallback mSignInCallback = null;
 
     private static final class Holder {
         private static final WeChatFactory INSTANCE = new WeChatFactory();
@@ -62,5 +64,17 @@ public class WeChatFactory {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public WeChatFactory onSignSuccess(IWeChatSignInCallback signInCallback){
+        this.mSignInCallback=signInCallback;
+        return this;
+    }
+    //微信登录
+    public final void signIn() {
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "random_state";
+        WXAPI.sendReq(req);
     }
 }

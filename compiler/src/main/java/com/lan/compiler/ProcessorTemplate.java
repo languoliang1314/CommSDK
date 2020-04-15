@@ -1,7 +1,8 @@
 package com.lan.compiler;
 
 import com.google.auto.service.AutoService;
-import com.lan.annotations.WXEntryGenerator;
+import com.lan.annotations.WXPayEntryGenerator;
+import com.lan.annotations.WXSignInEntryGenerator;
 
 import java.lang.annotation.Annotation;
 import java.util.LinkedHashSet;
@@ -49,20 +50,26 @@ public class ProcessorTemplate extends AbstractProcessor {
     }
     private Set<Class<? extends Annotation>> getSupportedAnnotations() {
         Set<Class<? extends Annotation>> annotations = new LinkedHashSet<>();
-        annotations.add(WXEntryGenerator.class);
+        annotations.add(WXPayEntryGenerator.class);
         return annotations;
     }
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         //生成一个 Class xxx.wxapi.WXEntryActivity extends BaseWXEntryActivity
         generateWXPayCode(roundEnvironment);
+        generateWXSignInCode(roundEnvironment);
         return false;
     }
 
     private void generateWXPayCode(RoundEnvironment roundEnvironment) {
         EntryVisotor visitor = new EntryVisotor();
         visitor.setFiler(mFiler);
-        scanElement(roundEnvironment,WXEntryGenerator.class,visitor);
+        scanElement(roundEnvironment, WXPayEntryGenerator.class,visitor);
+    }
+    private void generateWXSignInCode(RoundEnvironment roundEnvironment) {
+        EntryVisotor visitor = new EntryVisotor();
+        visitor.setFiler(mFiler);
+        scanElement(roundEnvironment, WXSignInEntryGenerator.class,visitor);
     }
 
     private void scanElement(RoundEnvironment roundEnvironment, Class<? extends Annotation> annotations, AnnotationValueVisitor visitor){

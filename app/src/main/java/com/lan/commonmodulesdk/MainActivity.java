@@ -13,8 +13,10 @@ import com.lan.commonsdk.ZxingScan.ZxingScanActivity;
 import com.lan.commonsdk.permission.PermissionCallBack;
 import com.lan.commonsdk.permission.PermissionHelp;
 import com.lan.paysharedsk.Config;
+import com.lan.paysharedsk.callbacks.IQqSignInCallback;
 import com.lan.paysharedsk.pay.FastPay;
-import com.lan.paysharedsk.pay.IAlPayResultListener;
+import com.lan.paysharedsk.qq.QqSignInFactory;
+import com.tencent.tauth.Tencent;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Config.getInstance()
                 .withWeChatAppID("wxd930ea5d5a258f4f")
-                .registeWeChat(this);
+                .withQqApId("1110040171");
         PermissionHelp.with(this)
                 .permissionCode(CAMERA_CODE)
                 .permissions(new String[]{Manifest.permission.CAMERA})
@@ -53,7 +55,16 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.sanc).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this, ZxingScanActivity.class);
+                QqSignInFactory.getInstance()
+                        .setSignInSuccess(new IQqSignInCallback() {
+                            @Override
+                            public void onSuccess(String openid) {
+
+                            }
+                        })
+                        .signIn(MainActivity.this);
+
+               // Intent intent=new Intent(MainActivity.this, ZxingScanActivity.class);
                 //startActivityForResult(intent,101);
 //                FastPay.create(MainActivity.this)
 //                        .setPayResultListener(new IAlPayResultListener() {
@@ -83,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
 //                            }
 //                        })
 //                        .alPay(info);
-                FastPay.create(MainActivity.this)
-                        .weChatPay("aa");
+//                FastPay.create(MainActivity.this)
+//                        .weChatPay("aa");
 
             }
         });
@@ -93,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode,resultCode,data,QqSignInFactory.getInstance().getQqLoginListener());
         if(resultCode==RESULT_OK){
             switch (requestCode){
                 case 101:

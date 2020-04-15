@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.lan.paysharedsk.Config;
+import com.lan.paysharedsk.callbacks.IAlPayResultListener;
 
 public class AliPayFactory {
     //设置支付回调监听

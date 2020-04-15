@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.alipay.sdk.app.PayTask;
-import com.lan.paysharedsk.ali.IAlPayResultListener;
+import com.lan.paysharedsk.callbacks.IAlPayResultListener;
 
 public class AlPayAsyncTask extends AsyncTask<String, Void, String> {
     private final Activity ACTIVITY;
